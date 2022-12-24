@@ -1,0 +1,78 @@
+<html>
+<head>
+  <style>
+    /* Add some style to the body */
+    body {
+      background: black;
+      height: 100vh;
+      margin: 0;
+      overflow: hidden;
+      position: relative;
+    }
+
+    /* Style the stars */
+    .star {
+      position: absolute;
+      width: 25px;
+      height: 25px;
+      top: -50px;
+      left: calc(50% - 12.5px);
+      transform: translate(-50%, -50%);
+      color: white;
+      font-size: 18px;
+    }
+  </style>
+</head>
+<body>
+  <!-- Add a container for the stars -->
+  <div id="star-container"></div>
+
+  <script>
+    // Get the star container
+    const container = document.getElementById('star-container');
+
+    // Create a function to generate a random number between a range
+    const randomNumber = (min, max) => Math.floor(Math.random() * (max - min + 1)) + min;
+
+    // Create a function to create a star element
+    const createStar = () => {
+      // Create the star element
+      const star = document.createElement('div');
+      star.classList.add('star');
+
+      // Add the star shape to the element
+      star.innerHTML = '★';
+
+      // Return the star element
+      return star;
+    }
+
+    // Create a function to animate the stars
+    const animateStars = () => {
+      // Create a new star element
+      const star = createStar();
+
+      // Add the star to the container
+      container.appendChild(star);
+
+      // Animate the star
+      anime({
+        targets: star,
+        duration: randomNumber(2000, 6000),
+        easing: 'linear',
+        translateY: [
+          { value: window.innerHeight + 50 },
+          { value: window.innerHeight + 50 }
+        ],
+        complete: () => {
+          // Remove the star from the container when the animation is complete
+          container.removeChild(star);
+        }
+      });
+    }
+
+    // Generate a new star every 500ms
+    setInterval(animateStars, 500);
+  </script>
+</body>
+</html>
